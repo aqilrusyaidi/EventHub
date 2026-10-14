@@ -1,0 +1,792 @@
+/* =========================================================
+   EventHub frontend styles
+   One stylesheet shared by every page.
+   ========================================================= */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --ink: #18233f;        /* main text, dark navy */
+  --muted: #56627c;      /* secondary text */
+  --paper: #edf1f7;      /* page background */
+  --surface: #ffffff;    /* cards, tables, forms */
+  --line: #d3dbe8;       /* borders */
+  --brand: #2743c9;      /* buttons and links */
+  --brand-dark: #1b2f96;
+  --stub: #f5b82e;       /* ticket stub yellow */
+  --ok: #1a7550;
+  --ok-bg: #e2f4ea;
+  --bad: #b3301f;
+  --bad-bg: #fbe7e3;
+  --warn-bg: #fff3d1;
+
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+
+  --radius: 10px;
+  --notch: 18px;         /* size of the punched holes on a ticket */
+  --stub-width: 108px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.35rem;
+  font-weight: 650;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--brand);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.container {
+  width: min(1120px, 100% - 2rem);
+  margin-inline: auto;
+}
+
+main.container {
+  padding-block: 2rem 4rem;
+}
+
+/* Visible keyboard focus on every interactive element */
+:focus-visible {
+  outline: 3px solid var(--stub);
+  outline-offset: 2px;
+}
+
+/* ---------- Header and navigation ---------- */
+.site-header {
+  background: var(--ink);
+  color: #fff;
+}
+
+.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  padding-block: 0.8rem;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--stub);
+}
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.main-nav a {
+  color: #d6dcec;
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.main-nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.main-nav a[aria-current="page"] {
+  background: #fff;
+  color: var(--ink);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.account-name {
+  font-weight: 600;
+}
+
+/* ---------- Role badges ---------- */
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-admin {
+  background: #ffd9d2;
+  color: #7c1f12;
+}
+
+.badge-organiser {
+  background: #d9e0ff;
+  color: #1b2f96;
+}
+
+.badge-customer {
+  background: #d5f0e2;
+  color: #125239;
+}
+
+.badge-confirmed {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.badge-cancelled {
+  background: #e6e9f0;
+  color: var(--muted);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 2px solid var(--brand);
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--brand);
+}
+
+.btn-secondary:hover {
+  background: #e3e8fb;
+  color: var(--brand-dark);
+}
+
+.btn-danger {
+  background: var(--bad);
+  border-color: var(--bad);
+}
+
+.btn-danger:hover {
+  background: #8c2416;
+  border-color: #8c2416;
+}
+
+.btn-small {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.9rem;
+}
+
+.btn-light {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+.btn-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
+.btn-danger-outline {
+  background: transparent;
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.btn-danger-outline:hover {
+  background: var(--bad-bg);
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+/* ---------- Page heading row ---------- */
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-head p {
+  margin-top: 0.4rem;
+  max-width: 60ch;
+}
+
+/* ---------- Toolbar (search and filters) ---------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.toolbar input[type="search"] {
+  flex: 1 1 260px;
+}
+
+.toolbar select {
+  flex: 0 1 220px;
+}
+
+/* ---------- Forms ---------- */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid #aab5c9;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+
+textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--bad);
+  background: #fffafa;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.field-error {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--bad);
+  margin-top: 0.3rem;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Messages ---------- */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border-left: 5px solid;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.alert-error {
+  background: var(--bad-bg);
+  border-color: var(--bad);
+  color: #6e1c11;
+}
+
+.alert-success {
+  background: var(--ok-bg);
+  border-color: var(--ok);
+  color: #0f4a32;
+}
+
+.alert-info {
+  background: var(--warn-bg);
+  border-color: var(--stub);
+  color: #5c4300;
+}
+
+.status-code {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0 0.45rem;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Toast messages that appear in the corner after an action */
+.toast-area {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  display: grid;
+  gap: 0.5rem;
+  width: min(420px, 100% - 2rem);
+}
+
+.toast-area .alert {
+  margin: 0;
+  box-shadow: 0 8px 24px rgba(24, 35, 63, 0.22);
+}
+
+/* ---------- Empty, loading and blocked states ---------- */
+.state {
+  padding: 2.5rem 1.5rem;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  text-align: center;
+  color: var(--muted);
+}
+
+.state h2 {
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.state .btn {
+  margin-top: 1rem;
+}
+
+/* ---------- Ticket cards (events list) ---------- */
+.ticket-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ticket {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--stub-width) 1fr;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* The two punched holes where the stub tears off */
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--stub-width) - var(--notch) / 2);
+  width: var(--notch);
+  height: var(--notch);
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.ticket::before {
+  top: calc(var(--notch) / -2);
+}
+
+.ticket::after {
+  bottom: calc(var(--notch) / -2);
+}
+
+.ticket-stub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0.5rem;
+  background: var(--stub);
+  border-right: 2px dashed rgba(24, 35, 63, 0.4);
+  text-align: center;
+  font-family: var(--font-display);
+}
+
+.stub-day {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stub-month {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.stub-year {
+  font-size: 0.85rem;
+}
+
+.ticket-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.1rem 1.25rem 1.1rem 1.5rem;
+  min-width: 0;
+}
+
+.ticket-body h2 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.ticket-body h2 a:hover {
+  text-decoration: underline;
+}
+
+.ticket-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 0.6rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.availability {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ok);
+}
+
+.availability.low {
+  color: #8a5a00;
+}
+
+.availability.none {
+  color: var(--bad);
+}
+
+/* ---------- Event detail page ---------- */
+.detail {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.panel h2 {
+  margin-bottom: 1rem;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.25rem;
+  margin: 1.25rem 0 0;
+}
+
+.facts dt {
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Weather block under the event facts */
+.weather {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 2px dashed var(--line);
+}
+
+.weather h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.9rem;
+  margin-top: 0.25rem;
+  border-top: 2px dashed var(--line);
+  font-weight: 600;
+}
+
+.total-line strong {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.panel .btn-block {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Tables ---------- */
+.table-wrap {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+thead th {
+  background: #dfe5f0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+tbody tr + tr td {
+  border-top: 1px solid var(--line);
+}
+
+td.num,
+th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+td.actions {
+  white-space: nowrap;
+  text-align: right;
+}
+
+td.actions .btn + .btn {
+  margin-left: 0.35rem;
+}
+
+.cell-sub {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* ---------- Dialogs ---------- */
+dialog {
+  width: min(560px, 100% - 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  color: var(--ink);
+}
+
+dialog::backdrop {
+  background: rgba(24, 35, 63, 0.55);
+}
+
+.dialog-body {
+  padding: 1.5rem;
+}
+
+.dialog-body h2 {
+  margin-bottom: 1rem;
+}
+
+/* ---------- Login and register ---------- */
+.auth-wrap {
+  width: min(440px, 100%);
+  margin: 1.5rem auto 0;
+}
+
+.auth-wrap h1 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+.auth-wrap .panel {
+  margin-top: 1.25rem;
+}
+
+.auth-wrap .btn {
+  width: 100%;
+}
+
+.auth-switch {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ---------- Booking receipt (dialog shown as a ticket) ---------- */
+.receipt {
+  display: grid;
+  grid-template-columns: var(--stub-width) 1fr;
+}
+
+.receipt .ticket-stub {
+  padding: 1.5rem 0.5rem;
+}
+
+.receipt-body {
+  padding: 1.5rem;
+}
+
+.stub-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 760px) {
+  .detail {
+    grid-template-columns: 1fr;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  :root {
+    --stub-width: 84px;
+  }
+
+  .stub-day {
+    font-size: 2rem;
+  }
+
+  /* Header: logo and account on the first row, links on the second */
+  .logo {
+    flex: 1;
+  }
+
+  .main-nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .account-name {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast-area .alert {
+    animation: toast-in 0.2s ease-out;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Text for screen readers only (hidden from sight, still announced) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
