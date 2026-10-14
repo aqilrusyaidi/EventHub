@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EventHub | Admin & Organiser Dashboard</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      background: #f3f6fb;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #173d86;
+    }
+
+    .dashboard-header {
+      background: linear-gradient(120deg, #173d86, #397cc8);
+      color: white;
+      padding: 45px 0;
+    }
+
+    .dashboard-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .dashboard-card .card-body {
+      padding: 25px;
+    }
+
+    .dashboard-card h3 {
+      color: #173d86;
+      font-weight: 700;
+    }
+
+    .management-section {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-dark py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        EventHub
+      </a>
+
+      
+<div class="d-flex align-items-center gap-3">
+  <span id="staffWelcome" class="text-white">
+    Admin / Organiser Portal
+  </span>
+
+  <button
+    id="staffLoginBtn"
+    type="button"
+    class="btn btn-light"
+    data-bs-toggle="modal"
+    data-bs-target="#staffLoginModal"
+  >
+    Login
+  </button>
+
+  <button
+    id="staffLogoutBtn"
+    type="button"
+    class="btn btn-outline-light d-none"
+  >
+    Logout
+  </button>
+</div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <div class="container">
+      <h1 class="fw-bold">Management Dashboard</h1>
+      <p class="mb-0">
+        Manage events, venues, users and bookings.
+      </p>
+    </div>
+  </header>
+
+  <!-- Dashboard Overview -->
+  <main class="container py-5">
+
+    <h2 class="fw-bold mb-4">Dashboard Overview</h2>
+
+    <div class="row g-4">
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100">
+          <div class="card-body">
+            <h6 class="text-muted">Total Events</h6>
+            <h3 id="totalEvents">--</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100">
+          <div class="card-body">
+            <h6 class="text-muted">Total Venues</h6>
+            <h3 id="totalVenues">--</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100">
+          <div class="card-body">
+            <h6 class="text-muted">Total Bookings</h6>
+            <h3 id="totalBookings">--</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card dashboard-card h-100">
+          <div class="card-body">
+            <h6 class="text-muted">Total Users</h6>
+            <h3 id="totalUsers">--</h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Management Menu -->
+    <section class="management-section">
+
+      <h2 class="fw-bold mb-4">Management Menu</h2>
+
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <button
+            id="manageEventsBtn"
+            class="btn btn-primary w-100 py-3"
+            type="button"
+            disabled
+          >
+            Manage Events
+          </button>
+        </div>
+
+        <div class="col-md-6">
+          <button
+            id="manageVenuesBtn"
+            class="btn btn-primary w-100 py-3"
+            type="button"
+            disabled
+          >
+            Manage Venues
+          </button>
+        </div>
+
+        <div class="col-md-6">
+          <button
+            id="manageBookingsBtn"
+            class="btn btn-outline-primary w-100 py-3"
+            type="button"
+            disabled
+          >
+            View Bookings
+          </button>
+        </div>
+
+        <div class="col-md-6">
+          <button
+            id="manageUsersBtn"
+            class="btn btn-outline-primary w-100 py-3"
+            type="button"
+            disabled
+          >
+            Manage Users (Admin Only)
+          </button>
+        </div>
+
+      </div>
+
+      <p class="text-muted mt-3 mb-0">
+        Management functions will be activated after login
+        and API integration.
+      </p>
+
+    </section>
+
+<!-- STEP 7W - Manage Events Section -->
+<section
+  id="manageEventsSection"
+  
+  class="management-section d-none"
+>
+  <div class="d-flex justify-content-between
+              align-items-center flex-wrap gap-3 mb-4">
+
+    <h2 class="fw-bold mb-0">Manage Events</h2>
+
+  
+<button
+  type="button"
+  id="addEventBtn"
+  class="btn btn-success"
+  data-bs-toggle="modal"
+  data-bs-target="#addEventModal"
+>
+  + Add New Event
+</button>
+
+  </div>
+
+  <div id="eventsManagementMessage" role="status">
+    Event records will appear here.
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Event ID</th>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Ticket Price</th>
+          <th>Available Tickets</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="eventsManagementBody">
+        <!-- Event records will be loaded here -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- STEP 7AD - Manage Venues Section -->
+<section
+  id="manageVenuesSection"
+  class="management-section d-none mt-5"
+>
+  <div class="d-flex justify-content-between
+              align-items-center flex-wrap gap-3 mb-4">
+
+    <h2 class="fw-bold mb-0">Manage Venues</h2>
+
+   
+<button
+  type="button"
+  id="addVenueBtn"
+  class="btn btn-success"
+  data-bs-toggle="modal"
+  data-bs-target="#addVenueModal"
+>
+  + Add New Venue
+</button>
+
+  </div>
+
+  <div id="venuesManagementMessage" role="status">
+    Venue records will appear here.
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Venue ID</th>
+          <th>Venue Name</th>
+          <th>Location</th>
+          <th>Capacity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="venuesManagementBody">
+        <!-- Venue records will be loaded here -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- STEP 7AK - Manage Bookings Section -->
+<section
+  id="manageBookingsSection"
+  class="management-section d-none mt-5"
+>
+  <div class="d-flex justify-content-between
+              align-items-center flex-wrap gap-3 mb-4">
+
+    <h2 class="fw-bold mb-0">Manage Bookings</h2>
+
+    <span class="badge bg-primary">
+      Booking Management
+    </span>
+  </div>
+
+  <div
+    id="bookingsManagementMessage"
+    role="status"
+  >
+    Booking records will appear here.
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Booking ID</th>
+          <th>Event ID</th>
+          <th>Customer ID</th>
+          <th>Tickets</th>
+          <th>Total Amount</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="bookingsManagementBody">
+        <!-- Booking records loaded by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- STEP 7AN - Manage Users Section -->
+<section
+  id="manageUsersSection"
+  class="management-section d-none mt-5"
+>
+  <div class="d-flex justify-content-between
+              align-items-center flex-wrap gap-3 mb-4">
+
+    <h2 class="fw-bold mb-0">Manage Users</h2>
+
+    <span class="badge bg-primary">
+      Administrator Only
+    </span>
+  </div>
+
+  <div
+    id="usersManagementMessage"
+    role="status"
+  >
+    Registered users will appear here.
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>User ID</th>
+          <th>Full Name</th>
+          <th>Email Address</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="usersManagementBody">
+        <!-- User records will be loaded here -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">
+      &copy; 2026 EventHub. All rights reserved.
+    </p>
+  </footer>
+
+<!-- Admin/Organiser Login Modal -->
+<div
+  class="modal fade"
+  id="staffLoginModal"
+  tabindex="-1"
+  aria-labelledby="staffLoginModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="staffLoginModalLabel">
+          Admin / Organiser Login
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form id="staffLoginForm">
+
+          <div class="mb-3">
+            <label for="staffEmail" class="form-label">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="staffEmail"
+              class="form-control"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="staffPassword" class="form-label">
+              Password
+            </label>
+
+            <input
+              type="password"
+              id="staffPassword"
+              class="form-control"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+
+          <div id="staffLoginMessage" role="status"></div>
+
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Login to Dashboard
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 7Y - Add New Event Modal -->
+<div
+  class="modal fade"
+  id="addEventModal"
+  tabindex="-1"
+  aria-labelledby="addEventModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="addEventModalLabel">
+          Add New Event
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="addEventForm">
+
+          <div class="mb-3">
+            <label for="newEventName" class="form-label">
+              Event Name
+            </label>
+            <input
+              type="text"
+              id="newEventName"
+              class="form-control"
+              maxlength="150"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="newEventDescription" class="form-label">
+              Event Description
+            </label>
+            <textarea
+              id="newEventDescription"
+              class="form-control"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="newEventDate" class="form-label">
+                Event Date and Time
+              </label>
+              <input
+                type="datetime-local"
+                id="newEventDate"
+                class="form-control"
+                required
+              >
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="newEventVenue" class="form-label">
+                Venue ID
+              </label>
+              <input
+                type="number"
+                id="newEventVenue"
+                class="form-control"
+                min="1"
+                step="1"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="newEventPrice" class="form-label">
+                Ticket Price (RM)
+              </label>
+              <input
+                type="number"
+                id="newEventPrice"
+                class="form-control"
+                min="0"
+                step="0.01"
+                required
+              >
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="newEventTickets" class="form-label">
+                Total Tickets
+              </label>
+              <input
+                type="number"
+                id="newEventTickets"
+                class="form-control"
+                min="1"
+                step="1"
+                required
+              >
+            </div>
+          </div>
+
+          <div id="addEventMessage" role="status"></div>
+
+          <button
+            type="submit"
+            class="btn btn-success w-100"
+          >
+            Create Event
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 7AA - Edit Event Modal -->
+<div
+  class="modal fade"
+  id="editEventModal"
+  tabindex="-1"
+  aria-labelledby="editEventModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="editEventModalLabel">
+          Edit Event
+        </h5>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editEventForm">
+
+          <input type="hidden" id="editEventId">
+
+          <div class="mb-3">
+            <label for="editEventName" class="form-label">
+              Event Name
+            </label>
+            <input type="text" id="editEventName"
+                   class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="editEventDescription" class="form-label">
+              Description
+            </label>
+            <textarea id="editEventDescription"
+                      class="form-control"
+                      rows="3" required></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editEventDate" class="form-label">
+                Event Date and Time
+              </label>
+              <input type="datetime-local"
+                     id="editEventDate"
+                     class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="editEventVenue" class="form-label">
+                Venue ID
+              </label>
+              <input type="number"
+                     id="editEventVenue"
+                     class="form-control"
+                     min="1" step="1" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="editEventPrice" class="form-label">
+                Ticket Price (RM)
+              </label>
+              <input type="number"
+                     id="editEventPrice"
+                     class="form-control"
+                     min="0" step="0.01" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="editEventTickets" class="form-label">
+                Total Tickets
+              </label>
+              <input type="number"
+                     id="editEventTickets"
+                     class="form-control"
+                     min="1" step="1" required>
+            </div>
+          </div>
+
+          <div id="editEventMessage" role="status"></div>
+
+          <button type="submit"
+                  class="btn btn-primary w-100">
+            Save Changes
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- STEP 7AF - Add New Venue Modal -->
+<div
+  class="modal fade"
+  id="addVenueModal"
+  tabindex="-1"
+  aria-labelledby="addVenueModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="addVenueModalLabel">
+          Add New Venue
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="addVenueForm">
+
+          <div class="mb-3">
+            <label for="newVenueName" class="form-label">
+              Venue Name
+            </label>
+            <input
+              type="text"
+              id="newVenueName"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="newVenueLocation" class="form-label">
+              Location
+            </label>
+            <input
+              type="text"
+              id="newVenueLocation"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="newVenueCapacity" class="form-label">
+              Capacity
+            </label>
+            <input
+              type="number"
+              id="newVenueCapacity"
+              class="form-control"
+              min="1"
+              step="1"
+              required
+            >
+          </div>
+
+          <div id="addVenueMessage" role="status"></div>
+
+          <button
+            type="submit"
+            class="btn btn-success w-100"
+          >
+            Create Venue
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- STEP 7AH - Edit Venue Modal -->
+<div
+  class="modal fade"
+  id="editVenueModal"
+  tabindex="-1"
+  aria-labelledby="editVenueModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="editVenueModalLabel">
+          Edit Venue
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editVenueForm">
+
+          <input type="hidden" id="editVenueId">
+
+          <div class="mb-3">
+            <label for="editVenueName" class="form-label">
+              Venue Name
+            </label>
+            <input
+              type="text"
+              id="editVenueName"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="editVenueLocation" class="form-label">
+              Location
+            </label>
+            <input
+              type="text"
+              id="editVenueLocation"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="editVenueCapacity" class="form-label">
+              Capacity
+            </label>
+            <input
+              type="number"
+              id="editVenueCapacity"
+              class="form-control"
+              min="1"
+              step="1"
+              required
+            >
+          </div>
+
+          <div id="editVenueMessage" role="status"></div>
+
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Save Changes
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- STEP 7AP - Edit User Modal -->
+<div
+  class="modal fade"
+  id="editUserModal"
+  tabindex="-1"
+  aria-labelledby="editUserModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">
+          Edit User
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form id="editUserForm">
+
+          <input type="hidden" id="editUserId">
+
+          <div class="mb-3">
+            <label for="editUserName" class="form-label">
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              id="editUserName"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="editUserEmail" class="form-label">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="editUserEmail"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="editUserRole" class="form-label">
+              User Role
+            </label>
+
+            <select
+              id="editUserRole"
+              class="form-select"
+              required
+            >
+              <option value="customer">Customer</option>
+              <option value="organiser">Organiser</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+
+          <div id="editUserMessage" role="status"></div>
+
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Save Changes
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- STEP 7BA - Professional Booking Details Modal -->
+<div class="modal fade" id="viewBookingModal"
+     tabindex="-1" aria-labelledby="viewBookingModalLabel"
+     aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="viewBookingModalLabel">
+          Booking Details
+        </h5>
+        <button type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table table-bordered mb-0">
+          <tbody>
+            <tr>
+              <th>Booking ID</th>
+              <td id="viewBookingId"></td>
+            </tr>
+            <tr>
+              <th>Event</th>
+              <td id="viewBookingEvent"></td>
+            </tr>
+            <tr>
+              <th>Customer</th>
+              <td id="viewBookingUser"></td>
+            </tr>
+            <tr>
+              <th>Tickets</th>
+              <td id="viewBookingQuantity"></td>
+            </tr>
+            <tr>
+              <th>Total Amount</th>
+              <td id="viewBookingAmount"></td>
+            </tr>
+             <th>Booking Date & Time</th>
+             <td id="viewBookingDate"></td>
+            <tr>
+              <th>Status</th>
+              <td>
+                <span id="viewBookingStatus"
+                      class="badge"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Dashboard JavaScript -->
+<script src="script.js"></script>
+
+</body>
+</html>

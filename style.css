@@ -1,0 +1,174 @@
+/* STEP 7O - EventHub Customer Portal Styling */
+
+:root {
+  --eventhub-blue: #173d86;
+  --eventhub-dark: #10264a;
+  --eventhub-yellow: #ffca45;
+  --eventhub-bg: #f3f6fb;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--eventhub-bg) !important;
+  color: #1e293b;
+}
+
+/* Navigation bar */
+.navbar {
+  background: var(--eventhub-blue) !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  letter-spacing: 0.4px;
+}
+
+/* Welcome header */
+header {
+  background: linear-gradient(
+    125deg,
+    #173d86 0%,
+    #2563a6 55%,
+    #397cc8 100%
+  ) !important;
+
+  color: white;
+  padding-top: 75px !important;
+  padding-bottom: 75px !important;
+}
+
+header h1 {
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+header .text-muted {
+  color: #e2e8f0 !important;
+}
+
+header .btn-primary {
+  background: var(--eventhub-yellow);
+  border-color: var(--eventhub-yellow);
+  color: var(--eventhub-dark);
+  font-weight: 700;
+}
+
+header .btn-primary:hover {
+  background: #f6b91d;
+  border-color: #f6b91d;
+  color: var(--eventhub-dark);
+}
+
+/* Event cards */
+#eventList .card {
+  border: 1px solid #e5eaf2;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#eventList .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(20, 45, 85, 0.15) !important;
+}
+
+#eventList .card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+#eventList .card-title {
+  color: var(--eventhub-dark);
+  min-height: 48px;
+}
+
+#eventList .card-text {
+  flex-grow: 1;
+}
+
+#eventList .btn-primary {
+  background: var(--eventhub-blue);
+  border-color: var(--eventhub-blue);
+  font-weight: 600;
+  border-radius: 9px;
+}
+
+#eventList .btn-primary:hover {
+  background: var(--eventhub-dark);
+}
+
+/* Search field */
+#eventSearch {
+  border-radius: 12px;
+  border: 1px solid #ccd6e5;
+  padding: 13px 17px;
+}
+
+#eventSearch:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* Booking cards */
+#bookingsList .card {
+  border-radius: 14px;
+  border: 1px solid #e5eaf2;
+}
+
+#bookingsList .card-body {
+  padding: 22px;
+}
+
+/* Modal forms */
+.modal-content {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.modal-header {
+  background: var(--eventhub-blue);
+  color: white;
+  padding: 20px 24px;
+}
+
+.modal-header .btn-close {
+  filter: invert(1) grayscale(1);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal .form-control {
+  border-radius: 9px;
+}
+
+/* Footer */
+footer {
+  background: var(--eventhub-dark) !important;
+  margin-top: 40px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 576px) {
+  header {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+
+  #eventList .card-body {
+    padding: 18px;
+  }
+}
+
